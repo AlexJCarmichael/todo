@@ -11,4 +11,11 @@ class DisplayList
       puts "#{y+1}. #{x}"
     end
   end
+
+  def display_completed_list
+    puts "List o'stuff done did!"
+    @completed.each_with_index do |x, y|
+      puts "#{y+1}. #{x}"
+    end
+  end
 end

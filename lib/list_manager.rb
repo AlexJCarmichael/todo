@@ -10,4 +10,10 @@ class ListManager
   def add_item(item)
     @list.push(item)
   end
+
+  def remove_item(item)
+    new_item = @list[item-1]
+    @completed.push(new_item)
+    @list.delete_at(item-1)
+  end
 end
