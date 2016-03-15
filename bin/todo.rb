@@ -8,16 +8,21 @@ require_relative '../lib/completed_list.rb'
 require_relative '../lib/to_do_list.rb'
 require_relative '../lib/list_manager.rb'
 
-list = ToDoList.new
-completed = CompletedList.new
+list = ToDoList.new.list
+completed = CompletedList.new.comp_list
 manager = ListManager.new(list, completed)
 
 class ToDo
-  def start
+  def start(manager)
     ethos
     give_options
     selection = gets.chomp
-    # case selection
+    case
+    when selection == "1"
+      puts "What is the first task you wish to add to the list?"
+      task = gets.chomp
+      manager.add_item(task)
+    end
 
 
   end
@@ -31,9 +36,11 @@ class ToDo
     puts "1. Create a list."
     puts "2. Add to a list."
     puts "3. Mark a task completed."
-    puts "4. Quit the program."
+    puts "4. View list."
+    puts "5. View completed list."
+    puts "6. Quit the program."
 
   end
 end
 
-ToDo.new.start
+ToDo.new.start(manager)
