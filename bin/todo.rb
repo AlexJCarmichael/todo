@@ -14,13 +14,14 @@ require_relative '../lib/io_adapter.rb'
 require_relative '../lib/csv_output.rb'
 
 list = ToDoList.new.list
-completed = CompletedList.new.comp_list
-manager = ListManager.new(list, completed)
-display = DisplayList.new(list, completed)
 input = ConsoleInput.new
 output = ConsoleOutput.new
-write = CSVOutput.new(list)
 io = IOAdapter.new(input, output)
+completed = CompletedList.new.comp_list
+manager = ListManager.new(list, completed)
+display = DisplayList.new(list, completed, io)
+write = CSVOutput.new(list)
+
 
 class ToDo
   def start(manager, display, io, write)
