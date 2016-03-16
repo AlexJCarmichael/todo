@@ -11,7 +11,7 @@ require_relative '../lib/display_list.rb'
 require_relative '../lib/console_input.rb'
 require_relative '../lib/console_output.rb'
 require_relative '../lib/io_adapter.rb'
-# require_relative '../lib/csv_output.rb'
+require_relative '../lib/csv_output.rb'
 
 list = ToDoList.new.list
 completed = CompletedList.new.comp_list
@@ -19,10 +19,11 @@ manager = ListManager.new(list, completed)
 display = DisplayList.new(list, completed)
 input = ConsoleInput.new
 output = ConsoleOutput.new
+write = CSVOutput.new(list)
 io = IOAdapter.new(input, output)
 
 class ToDo
-  def start(manager, display, io)
+  def start(manager, display, io, write)
     ethos(io)
     loop do
       give_options(io)
@@ -59,7 +60,16 @@ class ToDo
         system('clear')
         display.display_completed_list
       when selection == "6"
+        system('clear')
+        write.output_csv
       when selection == "7"
+        system('clear')
+         write.resume_list
+         write.list.each do |add|
+           manager.add_item(add)
+         end
+         display.display_list
+      when selection == "8"
         system('clear')
         io.puts "G'day!"
         exit
@@ -83,10 +93,11 @@ class ToDo
     io.puts "4. View list."
     io.puts "5. View completed list."
     io.puts "6. Save the to-do list as a file to resume later."
-    io.puts "7. Quit the program."
+    io.puts "7. Resumes a saved to-do list."
+    io.puts "8. Quit the program."
 
   end
 
 end
 
-ToDo.new.start(manager, display, io)
+ToDo.new.start(manager, display, io, write)
