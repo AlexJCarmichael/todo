@@ -11,6 +11,7 @@ require_relative '../lib/display_list.rb'
 require_relative '../lib/console_input.rb'
 require_relative '../lib/console_output.rb'
 require_relative '../lib/io_adapter.rb'
+# require_relative '../lib/csv_output.rb'
 
 list = ToDoList.new.list
 completed = CompletedList.new.comp_list
@@ -33,7 +34,7 @@ class ToDo
         until task == "0"
           manager.add_item(task)
           system('clear')
-          io.puts "Reminder, type 0 to exit"
+          puts "Reminder, type 0 to exit"
           display.display_list
           task = io.gets.chomp
         end
@@ -42,7 +43,7 @@ class ToDo
         task = io.gets.chomp
         system('clear')
         manager.add_item(task)
-        display.display_list
+        io.display.display_list
       when selection == "3"
         io.puts "What is the number of the task have you finished?"
         io.puts "An invalid input will erase the last item on the list."
@@ -54,12 +55,11 @@ class ToDo
       when selection == "4"
         system('clear')
         display.display_list
-        io.puts * 2
       when selection == "5"
         system('clear')
         display.display_completed_list
-        io.puts * 2
       when selection == "6"
+      when selection == "7"
         system('clear')
         io.puts "G'day!"
         exit
@@ -82,7 +82,8 @@ class ToDo
     io.puts "3. Mark a task completed."
     io.puts "4. View list."
     io.puts "5. View completed list."
-    io.puts "6. Quit the program."
+    io.puts "6. Save the to-do list as a file to resume later."
+    io.puts "7. Quit the program."
 
   end
 
